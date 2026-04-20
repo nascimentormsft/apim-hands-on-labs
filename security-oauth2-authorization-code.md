@@ -4,7 +4,7 @@
 
 In Authorization code grant type, User is challenged to prove their identity providing user credentials. Upon successful authorization, the token endpoint is used to obtain an access token. The obtained token is sent to the resource server and gets validated before sending the secured data to the client application.
 
-[Microsoft Indentity platform](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Microsoft Indentity platform](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
 
 ## Register an application (backend-app) in Azure AD to represent the Basic Calculator API​
 
@@ -14,31 +14,31 @@ To protect an API with Azure AD, first register an application in Azure AD that 
 
 - Select New registration.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/001-app-registration.png)
 
 - In the Name section, enter a meaningful application name that will be displayed to users of the app. For example oauth-backend-app
 - In the Supported account types section, select an option that suits your scenario.
 - Leave the Redirect URI section empty.
-Select Register to create the application.
+- Select Register to create the application.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/002-oauth-backend-app.png)
 
 - On the app Overview page, find the Application (client) ID value and **record it for later.**
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/003-oauth-backend-app.png)
 
  - Select **Expose an API** and **set** the Application ID URI with the default value. Record this value for later.
 
- [Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+ ![Placeholder](/images/security/oauth2/authorization-code/003.1-oauth-backend-app.png)
 
 - Select the **Add a scope**. Then create a new scope that’s supported by the API (for example, Calculator.Read).
 
- [Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+ ![Placeholder](/images/security/oauth2/authorization-code/004-oauth-backend-app.png)
 
 - Select the **Add scope** button to create the scope.
 - Repeat this step to add all scopes supported by your API. When the scopes are created, **make  note of them** for use in a subsequent step (optional for this lab).
 
- [Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+ ![Placeholder](/images/security/oauth2/authorization-code/005-oauth-backend-app.png)
 
 ## Register another application (client-app) in Azure AD to represent the Developer Portal( client application)​
 
@@ -50,32 +50,33 @@ Every client application that calls the API needs to be registered as an applica
 - Leave the **Redirect URI** section empty.
 - Select **Register** to create the application.
 
- [Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+ ![Placeholder](/images/security/oauth2/authorization-code/006-oauth-client-app.png)
 
 - On the app **Overview page**, find the **Application (client) ID** value and **record it for later**.
 - Create a client secret for this application to use in a subsequent step.
   - From the left menu options for your client app, select **Certificates & secrets**, and select New client **secret**.
   - Under Add a client secret, provide a Description. Choose when the key should expire and select **Add**. When the secret is created, note the **key value** for use in a subsequent step.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/007-oauth-client-app.png)
 
 ## Grant permissions for client-app to call backend-app
 - Now we have to open our client app and choose the option **API permissions**
 - In here we need to click on **Add a permission**
 - Then choose **APIs my organization uses**
-- Select the record for **backend-app-oauth**
+- Search for the **backend cliend id**
+- Select the record for **oauth-backend-app**
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/008-oauth-client-app.png)
 
-Then select the **Delegated Permissions** option
-Then mark the **Calculator.Read** checkbox
-Then click the **Add Permissions** button
+- Then select the **Delegated Permissions** option
+- Then mark the **Calculator.Read** checkbox
+- Then click the **Add Permissions** button
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/009-oauth-client-app.png)
 
-Finally click the **Grant admin consent for ...**
+- Finally click the **Grant admin consent for ...**
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/010-oauth-client-app.png)
 
 ## Enable OAuth 2.0 in the Developer Console for Authorization Code Grant type
 At this point, we have created the applications in Azure AD, and granted proper permissions to allow the client-app to call the backend-app.
@@ -87,31 +88,39 @@ In this demo, the Developer Console is the client-app and has a walk through on 
 - For the Client **registration page URL**, enter a placeholder value, such as http://localhost.
 - For Authorization grant types, select **Authorization code**.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/011-apim-oauth.png)
 
 Specify the Authorization endpoint URL and Token endpoint URL. These values can be retrieved from the Endpoints page in your Azure AD tenant. Browse to the client App registrations page again and select Endpoints.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/012-apim-oauth.png)
+
+![Placeholder](/images/security/oauth2/authorization-code/014-apim-oauth.png)
+
+Add the **oauth-backend-app** scope as **Default scope**.
+
+![Placeholder](/images/security/oauth2/authorization-code/013-apim-oauth.png)
 
 ## Endpoints versions
-We recommend using v2 endpoints. When using v2 endpoints, use the scope you created for the backend-app in the Default scope field. Also, make sure to set the value for the accessTokenAcceptedVersion property to 2 in your application manifest in Azure AD Client APP and Backend app.
+We recommend using v2 endpoints. When using v2 endpoints, use the scope you created for the backend-app in the Default scope field. Also, make sure to set the value for the **accessTokenAcceptedVersion** property to 2 in your application manifest in Azure AD Client APP and Backend app.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/015-oauth-backend-app.png)
+
+![Placeholder](/images/security/oauth2/authorization-code/015.1-oauth-backend-app.png)
 
 - Next, specify the client credentials. These are the credentials for the client-app.
 - For **Client ID**, use the Application ID of the client-app.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/015.2-oauth-backend-app.png)
 
 - For **Client secret**, use the key you created for the client-app earlier.
 - Immediately following the client secret is the redirect_urls
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/016-apim-oauth.png)
 
 - Go back to your client-app registration in Azure Active Directory under Authentication.
 - Paste the redirect_url under Redirect URI, and check the issuer tokens then click on Configure button to save.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/017-apim-oauth.png)
 
 Now that you have configured an OAuth 2.0 authorization server, the Developer Console can obtain access tokens from Azure AD.
 
@@ -121,35 +130,71 @@ The next step is to enable OAuth 2.0 user authorization for your API. This enabl
 - Select the **Basic Calculator** and Go to **Settings**.
 - Under Security, choose OAuth 2.0, select the OAuth 2.0 server you configured earlier and select save.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/018-apim-oauth.png)
+
+- Add a **validate-jwt** policy to all operations of the API.
+
+![Placeholder](/images/security/oauth2/authorization-code/019-apim-oauth.png)
+
+```xml
+    <inbound>
+        <base />
+        <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Invalid JWT">
+            <openid-config url="https://login.microsoftonline.com/{YOUR-TENANT-ID}/v2.0/.well-known/openid-configuration" />
+            <audiences>
+                <audience>{YOUR-BACKEND-CLIENT-ID}</audience>
+            </audiences>
+            <issuers>
+                <issuer>https://login.microsoftonline.com/{YOUR-TENANT-ID}/v2.0</issuer>
+            </issuers>
+            <required-claims>
+                <claim name="scp" match="any">
+                    <value>{YOUR-SCOPE-NAME}</value>
+                </claim>
+            </required-claims>
+        </validate-jwt>
+    </inbound>
+```
+
+Now, if you your tenant requires admin consent to call the API, but you trust the application, you can optionally configure the application as an Authorized client.
+
+- Go back to **oauth-backend-app** and select **Expose an API**.
+- Click **Add a client application**.
+- Search for the **oauth-client-app** client id.
+- Select the *Authorized scopes*.
+- Click *Add application*.
+
+So during the authentication it wont be requested admin consent. **Only do this if you trust the API you are connecting with**.
+
+![Placeholder](/images/security/oauth2/authorization-code/020-apim-oauth.png)
 
 - Publish the developer portal again to refresh this changes
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/021-apim-oauth.png)
 
 ## Calling the API from the Developer Portal
 Now that the OAuth 2.0 user authorization is enabled on your API, the Developer Console will obtain an access token on behalf of the user, before calling the API.
 
 - Copy the developer portal url from the overview blade of apim
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/022-apim-oauth.png)
 
 - Browse to any operation under the **Basic Calculator** API in the developer portal and select Try it. This brings you to the Developer Console.
 - Note a new item in the Authorization section, corresponding to the authorization server you just added.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/023-dev-portal.png)
 
 - Select Authorization code from the authorization drop-down list, and you are prompted to sign in to the Azure AD tenant. If you are already signed in with the account, you might not be prompted.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/024-dev-portal.png)
 
 - After successful sign-in, an Authorization header is added to the request, with an access token from Azure AD. The following is a sample token (Base64 encoded):
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/025-dev-portal.png)
 
 Select Send to call the API successfully with 200 ok response.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/026-dev-portal.png)
 
 ## Validate-jwt policy to pre-authorize requests with AD token:
 At this point we can call the APIs with the obtained bearer token. However, what if someone calls your API without a token or with an invalid token? For example, try to call the API without the Authorization header, the call will still go through. This is because the Azure does not validate the access token, It simply passes the Authorization header to the back-end API.
@@ -180,26 +225,46 @@ We will now configure the Validate JWT policy to pre-authorize requests in Azure
         </validate-jwt>
     </inbound>
 ```
-_If you have configuration from previous par of this lab, just remove it._
+*If you have configuration from previous par of this lab, just remove it.*
 
 You should have something like this:
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/019-apim-oauth.png)
 
 - You will need to get the id of your scope, you set from you backend-app registration. Normally this comes in the form **api://<your-backend-client-id>/Calculator.read**, we need to use the id **<your-backend-client-id>** as audience
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/003.1-oauth-backend-app.png)
 
 - Go back to the developer portal and send the api with invalid token.
 - You would observe the 401 unauthorized.
 
-[Placeholder](/images/security/oauth2/authorization-code/000-authz-codeflow.svg)
+![Placeholder](/images/security/oauth2/authorization-code/027-dev-portal.png)
 
 - Modify the token from authorization header to the valid token and send the api again to observe the 200 Ok response.
 
 ## Understanding validate-jwt Policy
 
-In this section, we will be focusing on understanding how **validate-jwt** policy works (the image in the right side is the decoded JWT Token)
+```xml
+    <inbound>
+        <base />
+        <validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Invalid JWT">
+            <openid-config url="https://login.microsoftonline.com/{YOUR-TENANT-ID}/v2.0/.well-known/openid-configuration" />
+            <audiences>
+                <audience>{YOUR-BACKEND-CLIENT-ID}</audience>
+            </audiences>
+            <issuers>
+                <issuer>https://login.microsoftonline.com/{YOUR-TENANT-ID}/v2.0</issuer>
+            </issuers>
+            <required-claims>
+                <claim name="scp" match="any">
+                    <value>Calculator.Read</value>
+                </claim>
+            </required-claims>
+        </validate-jwt>
+    </inbound>
+```
+
+In this section, we will be focusing on understanding how **validate-jwt** policy works.
 
 - The validate-jwt policy supports the validation of JWT tokens from the security viewpoint, It validates a JWT (JSON Web Token) passed via the HTTP Authorization header
 
